@@ -57,14 +57,14 @@ where XX is assigned as
 To login on the VIRTUAL machine
 ::
 
-  ssh mhpcXX@hpc.c3e.cosint.it
+  ssh <group-username>@hpc.c3e.cosint.it
   ssh centos@10.2.33.XX
 
 +---------+------------------+
 |  XX     |   USER           |
 +=========+==================+
-| 13      |   mhpc01         | 
+| 14      |   mhpc01         | 
 +---------+------------------+
-| 14      |   mhpc03         |
+| 13      |   mhpc03         |
 +---------+------------------+
 
