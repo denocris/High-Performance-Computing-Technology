@@ -197,6 +197,10 @@ The easiest way to accomplish this under CentOS is by setting up NFS.
 
 #. Log into the nodes as root.
 
+#. Configure firewall::
+
+        # iptables -I INPUT -s 192.168.0.0/24 -j ACCEPT
+
 #. Install the nfs packages via yum::
 
         # yum install nfs-utils nfs-utils-lib
