@@ -2,7 +2,7 @@ P1.8 - Hight Performance Computing Technology
 ==============================================
 
 This repository contains the assignements and workspaces for the
-course P1.7
+course P1.8
 
 Please refer to the material on the moodle P1.8_Hight_Performance_Computing_Technology_
 
