@@ -7,13 +7,13 @@ For these two hands-on sessions you will be working in groups.
 +---------+--------------------------------+
 |  GROUP  |  MEMBERS                       |
 +=========+================================+
-| group1  | mowais, sparonuz, ansuini      |
+| group1  |                                |
 +---------+--------------------------------+
-| group2  | raversa, ndemo, makweba        | 
+| group2  |                                | 
 +---------+--------------------------------+
-| group3  | igirardi, mbrenesn, plabus     |
+| group3  |                                |
 +---------+--------------------------------+
-| group4  | pdicerbo, jcarmona, aando      |
+| group4  |                                |
 +---------+--------------------------------+
 
 
