@@ -1,18 +1,20 @@
-============================
-D6-Hands-on: Openstack 
-===========================
+===========
+D7-Hands-on
+===========
 
-To access the CNR/IOM OpenStack dashboard
+Docker and virtualization 
+
+To access the machines
 ::
 
-  http://nimbo.escience-lab.it/dashboard
+  ssh  
 
-The credential to access the dashboard are assigned as follows:
+The credential to access the machines are assigned as follows:
 
 +---------+----------+----------+-----------+
 |  GROUP  |   USER   | PASSWORD |  MEMBERS  |
 +=========+==========+==========+===========+
-| group1  |   mhpc01 | mhpc01   |           |
+| group1  |   mhpc01 | mhpc01   | mowais    |
 +---------+----------+----------+-----------+
 |         |   mhpc02 | mhpc02   | sparonuz  |
 +---------+----------+----------+-----------+ 
@@ -47,7 +49,7 @@ To login on the virtual machines
 Note
 ====
 
-To access the OpenStack dashboard and the virtual machine you need  to be connected either with ethernet connection or to connect to the hidden wireless network 
+To access the OpenStack dashboard and the virtual machine you need to connected either with ethernet connection or to connect to the hidden wireless network 
 ::
 
   MHPC
@@ -56,26 +58,4 @@ with password
 ::
 
   2014-2015
-
-==========================
-Elasticluster installation
-==========================
-
-To install elasticluster you have to issue
-::
-
-  pip install ansible==1.3.3
-  pip install elasticluster
-
-You may want to install it in a virtual environment
-::
-  
-  (pip install virtualenv)
-  virtualenv elastic
-  . ~/elastic/bin/activate
-  
-To exit the virtual environment
-::
-
-  deactivate  
 

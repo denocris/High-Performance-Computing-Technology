@@ -1,11 +1,11 @@
-============================
-D6-Hands-on: Openstack 
-===========================
+=================================================
+D8-Hands-on: Virtualization&Remote Visualisation 
+=================================================
 
-To access the CNR/IOM OpenStack dashboard
+To access the C3HPC  OpenStack dashboard
 ::
 
-  http://nimbo.escience-lab.it/dashboard
+  http://cloud.c3hpc.exact-lab.it/dashboard
 
 The credential to access the dashboard are assigned as follows:
 
@@ -58,24 +58,6 @@ with password
   2014-2015
 
 ==========================
-Elasticluster installation
+VNC vgl installation 
 ==========================
-
-To install elasticluster you have to issue
-::
-
-  pip install ansible==1.3.3
-  pip install elasticluster
-
-You may want to install it in a virtual environment
-::
-  
-  (pip install virtualenv)
-  virtualenv elastic
-  . ~/elastic/bin/activate
-  
-To exit the virtual environment
-::
-
-  deactivate  
 
