@@ -9,19 +9,19 @@ Install and configure SLURM package and compare with Torque/Maui.
 Tutor 
 -----
 
-S.Cozzini/ G.Gallizia
+S.Cozzini/ A.Sartori
 
 Steps:
 ------
 
-  #. Prerequisites
-  #. (Optional) Install pdsh
-  #. Install MUNGE
-  #. Build Slurm
-  #. Install Slurm
-  #. Configure Slurm
-  #. Test Slurm
-  #. Write a report and improve documentation
+ #. Prerequisites
+ #. (Optional) Install pdsh
+ #. Install MUNGE
+ #. Build Slurm
+ #. Install Slurm
+ #. Configure Slurm
+ #. Test Slurm
+ #. Write a report and improve documentation
 
 Resources
 ---------
