@@ -61,19 +61,33 @@ with password
 Elasticluster installation
 ==========================
 
-To install elasticluster you have to issue
-::
 
-  pip install ansible==1.3.3
-  pip install elasticluster
+Do::
 
-You may want to install it in a virtual environment
-::
-  
-  (pip install virtualenv)
-  virtualenv elastic
-  . ~/elastic/bin/activate
-  
+ sudo apt-get install gcc g++ git libc6-dev libffi-dev libssl-dev python-dev virtualenv
+
+or::
+
+ yum install gcc gcc-c++ git libffi-devel openssl-devel python-devel python-virtualenv
+
+Create a virtualenv and clone and install::
+
+ virtualenv elasticluster
+ . elasticluster/bin/activate
+ cd elasticluster
+ git clone git://github.com/gc3-uzh-ch/elasticluster.git src
+ cd src
+ pip install -e .
+
+Then::
+
+ elasticluser start slurm
+
+ elasticluster list
+
+ elasticluster stop slurm
+
+
 To exit the virtual environment
 ::
 
