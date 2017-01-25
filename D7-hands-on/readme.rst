@@ -8,6 +8,7 @@ Docker and virtualization
 In this exercise we will use mainly the for b2X nodes on Cosilt cluster  in an interactive way.
 
 Steps:
+
 - guided tutorial: configure/play with basic docker commands 
 - exercise 1: measure overhead of docker container on HPL benchmark 
 - exercise 2: create your own docker container for scientific application and play with them 
