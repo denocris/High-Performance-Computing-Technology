@@ -9,19 +9,19 @@ Install and configure SLURM package and compare with Torque/Maui.
 Tutor 
 -----
 
-S.Cozzini/ A.Sartori
+S.Cozzini/ G.Gallizia
 
 Steps:
 ------
 
- #. Prerequisites
- #. (Optional) Install pdsh
- #. Install MUNGE
- #. Build Slurm
- #. Install Slurm
- #. Configure Slurm
- #. Test Slurm
- #. Write a report and improve documentation
+  #. Prerequisites
+  #. (Optional) Install pdsh
+  #. Install MUNGE
+  #. Build Slurm
+  #. Install Slurm
+  #. Configure Slurm
+  #. Test Slurm
+  #. Write a report and improve documentation
 
 Resources
 ---------
@@ -52,7 +52,7 @@ environment of the laboratory.
 #. Log into the master node then become the superuser with::
 
         $ ssh-add your_ssh_key
-        $ ssh -A cloud-user@$MASTER
+        $ ssh -A centos@$MASTER
         $ sudo -i
 
    Don't forget to substitute ``your_ssh_key`` with the path to your
@@ -97,11 +97,11 @@ environment of the laboratory.
         # cd /root
         # tar -cvf ssh.tar .ssh/
 
-#. Copy the tar file into the cloud-user home directory and make sure it
+#. Copy the tar file into the ``centos`` home directory and make sure it
    is world-readable::
 
-        # cp /root/ssh.tar /home/cloud-user/
-        # chmod +r /home/cloud-user/ssh.tar
+        # cp /root/ssh.tar /home/centos/
+        # chmod +r /home/centos/ssh.tar
 
 #. Drop your privileges and copy ``ssh.tar`` on the compute nodes::
 
@@ -116,7 +116,7 @@ environment of the laboratory.
 
         $ ssh $NODE_IP
         $ sudo -i
-        # cp /home/cloud-user/ssh.tar /root/
+        # cp /home/centos/ssh.tar /root/
         # tar -xvf ssh.tar
 
 Question: why do we have to do all this stuff? (Hint: look at the
@@ -135,9 +135,9 @@ Edit and propagate the hosts file
         ::1             localhost6 localhost6.localdomain6
 
         #Slurm nodes
-        192.168.0.50   slurm-frontend
-        192.168.0.51   slurm-compute1
-        192.168.0.52   slurm-compute2
+        192.168.0.50   slurm-1
+        192.168.0.51   slurm-2
+        192.168.0.52   slurm-3
 
    Please do not blindly copy this sample into your ``/etc/hosts`` file
    or else you will deserve all the frustration a broken configuration
@@ -145,13 +145,13 @@ Edit and propagate the hosts file
 
 #. Try to log into the nodes using names instead of IPs::
 
-        # ssh slurm-compute1
+        # ssh slurm-1
         # exit
 
 #. If you can log into the nodes then you can propagate your
    ``/etc/hosts`` file with this oneliner::
 
-        for i in `seq 2` ; do scp /etc/hosts slurm-compute$i:/etc/hosts ; done
+        for i in `seq 2 3` ; do scp /etc/hosts slurm-$i:/etc/hosts ; done
 
 (Optional) Share homes and executables via NFS
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -187,19 +187,17 @@ The easiest way to accomplish this under CentOS is by setting up NFS.
 #. Enable nfs service and start it::
 
         # chkconfig nfs on
-        # service rpcbind start
-        # service rpcidmapd start
         # service nfs start
 
-#. Configure firewall::
+   If this fails, check that ``rpcbind`` is running::
 
-        # iptables -I INPUT -s 192.168.0.0/24 -j ACCEPT
+       # service rpcbind status 
+   
+   And in case, start it::
+
+       # service rpcbind start 
 
 #. Log into the nodes as root.
-
-#. Configure firewall::
-
-        # iptables -I INPUT -s 192.168.0.0/24 -j ACCEPT
 
 #. Install the nfs packages via yum::
 
@@ -207,8 +205,8 @@ The easiest way to accomplish this under CentOS is by setting up NFS.
 
 #. Append lines like these to ``/etc/fstab``::
 
-        192.168.0.50:/home             /home           nfs     defaults      0   0
-        192.168.0.50:/opt/cluster      /opt/cluster    nfs     defaults      0   0
+        192.168.X.X:/home             /home           nfs     defaults      0   0
+        192.168.X.X:/opt/cluster      /opt/cluster    nfs     defaults      0   0
 
 #. Create the ``/opt/cluster`` directory::
 
@@ -218,6 +216,8 @@ The easiest way to accomplish this under CentOS is by setting up NFS.
 
         # mount /home
         # mount /opt/cluster
+
+   If you get and error, please make sure that the firewall of the master node is not blocking the communication on the ports used by ``nfs``
 
 Installation guide
 ------------------
@@ -239,22 +239,22 @@ configuration file and can be installed via YUM::
     yum install epel-release
     yum install pdsh pdsh-rcmd-ssh
 
-If the cluster nodes are named ``slurm-compute1``, ``slurm-compute2``
+If the cluster nodes are named ``slurm-2``, ``slurm-3``
 and ``slurm-frontend``:
 
-- To issue a command on both ``slurm-compute01`` and ``slurm-compute2`` from
+- To issue a command on both ``slurm-2`` and ``slurm-3`` from
   ``slurm-frontend``::
 
-    root@slurm-frontend:~# pdsh -R ssh -w slurm-compute[01-02] hostname
+    root@slurm-frontend:~# pdsh -R ssh -w slurm-[2-3] hostname
 
 - To install ``pdsh`` on the nodes from ``slurm-frontend`` (this is needed in
   order to have ``pdcp`` available on the nodes)::
 
-    root@slurm-frontend:~# pdsh -R ssh -w slurm-compute[01-02] yum -y install pdsh pdsh-rcmd-ssh
+    root@slurm-frontend:~# pdsh -R ssh -w slurm-[2-3] yum -y install pdsh pdsh-rcmd-ssh
 
 - To copy a file from ``slurm-frontend`` to both the nodes you can use ``pdcp``::
 
-    root@slurm-frontend:~# pdcp -R ssh -w slurm-compute[01-02] /etc/hosts /etc/hosts
+    root@slurm-frontend:~# pdcp -R ssh -w slurm-compute[1-2] /etc/hosts /etc/hosts
 
 ``pdsh`` manual:
 
@@ -330,23 +330,24 @@ dependencies::
 Get the slurm tar-ball::
 
     wget http://www.schedmd.com/download/archive/slurm-14.11.2.tar.bz2
+    wget http://www.schedmd.com/downloads/latest/slurm-15.08.13.tar.bz2
 
 Then build the RPMs with::
 
-    rpmbuild -ta slurm-14.11.2.tar.bz2
+    rpmbuild -ta slurm-15.08.13.tar.bz2
 
 Installing SLURM
 ^^^^^^^^^^^^^^^^
 
 If you have successfully built the SLURM RPMs you can install them::
 
-    rpm -ivh slurm-14.11.2-1.el6.x86_64.rpm \
-        slurm-devel-14.11.2-1.el6.x86_64.rpm \
-        slurm-pam_slurm-14.11.2-1.el6.x86_64.rpm \
-        slurm-munge-14.11.2-1.el6.x86_64.rpm \
-        slurm-plugins-14.11.2-1.el6.x86_64.rpm \
-        slurm-perlapi-14.11.2-1.el6.x86_64.rpm \
-        slurm-sjobexit-14.11.2-1.el6.x86_64.rpm
+    rpm -ivh slurm-15.08.13-1.el6.x86_64.rpm \
+        slurm-devel-15.08.13-1.el6.x86_64.rpm \
+        slurm-pam_slurm-15.08.13-1.el6.x86_64.rpm \
+        slurm-munge-15.08.13-1.el6.x86_64.rpm \
+        slurm-plugins-15.08.13-1.el6.x86_64.rpm \
+        slurm-perlapi-15.08.13-1.el6.x86_64.rpm \
+        slurm-sjobexit-15.08.13-1.el6.x86_64.rpm
 
 Then transfer those RPMs to the compute nodes and install them.
 
@@ -354,20 +355,21 @@ Configuring SLURM
 ^^^^^^^^^^^^^^^^^
 
 To configure SLURM there's an HTML form located in
-``/usr/share/doc/slurm-14.11.2/html/configurator.html`` with all the
+``/usr/share/doc/slurm-15.08.13/html/configurator.html`` with all the
 options or you can use the
-``/usr/share/doc/slurm-14.11.2/html/configurator.easy.html`` that
+``/usr/share/doc/slurm-15.08.13/html/configurator.easy.html`` that
 assumes the default value for most of the configuration options.
 
 Both HTML files are fully annotated and can be opened with any
 JavaScript capable browser. When you've finished with the configuration
 press the Submit button at the bottom copy the output to a file and you
-have a slurm.conf file that you tweak further or just install on the
+will have a ``slurm.conf`` file that you tweak further or just install on the
 nodes.
 
 **WARNING**: you have to add ALL the nodes to the ``slurm.conf``. The
 configurator web page DOES NOT add the master node to the nodes list and
 so you have to add it yourself.
+
 
 Before starting SLURM there are some operations that must be done:
 
@@ -379,5 +381,12 @@ Before starting SLURM there are some operations that must be done:
 
 #. Copy the generated configuration file to ``/etc/slurm/slurm.conf``
 
+#. Start the demons on all nodes::
 
+     service slurm start
 
+#. check that everything is working::
+
+     sinfo
+
+#. Try to submit a batch job using ``sbatch``

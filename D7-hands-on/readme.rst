@@ -3,59 +3,41 @@ D7-Hands-on
 ===========
 
 Docker and virtualization 
+--------------------------
 
-To access the machines
-::
+In this exercise we will use mainly the for b2X nodes on Cosilt cluster  in an interactive way.
 
-  ssh  
+Steps:
+- guided tutorial: configure/play with basic docker commands 
+- exercise 1: measure overhead of docker container on HPL benchmark 
+- exercise 2: create your own docker container for scientific application and play with them 
 
-The credential to access the machines are assigned as follows:
+Part 1: configure with basic docker commands 
+______________________________________________
 
-+---------+----------+----------+-----------+
-|  GROUP  |   USER   | PASSWORD |  MEMBERS  |
-+=========+==========+==========+===========+
-| group1  |   mhpc01 | mhpc01   | mowais    |
-+---------+----------+----------+-----------+
-|         |   mhpc02 | mhpc02   | sparonuz  |
-+---------+----------+----------+-----------+ 
-|         |   mhpc03 | mhpc03   | aansuini  |
-+---------+----------+----------+-----------+
-| group2  |   mhpc04 | mhpc04   | raversa   |
-+---------+----------+----------+-----------+
-|         |   mhpc05 | mhpc05   | ndemo     |
-+---------+----------+----------+-----------+
-|         |   mhpc06 | mhpc06   | makweba   |
-+---------+----------+----------+-----------+
-| group3  |   mhpc07 | mhpc07   | igirardi  |
-+---------+----------+----------+-----------+
-|         |   mhpc08 | mhpc08   | mbrenesn  |
-+---------+----------+----------+-----------+
-|         |   mhpc09 | mhpc09   | plabus    |
-+---------+----------+----------+-----------+
-| group4  |   mhpc10 | mhpc10   | pdicerbo  |
-+---------+----------+----------+-----------+
-|         |   mhpc11 | mhpc11   | jcarmona  |
-+---------+----------+----------+-----------+
-|         |   mhpc12 | mhpc12   | aando     |
-+---------+----------+----------+-----------+
+Here goes Stefano's notes 
+
+exercise 1: measure overhead of docker container on HPL benchmark
+__________________________________________________________________
+
+Stefano's notes 
 
 
-To login on the virtual machines
-::
+exercise 2: create your own docker container for scientific application and play with them
+___________________________________________________________________________________________
 
-	ssh centos@<ip>
+Each group is supposed to create a docker image that automatically install scientific package and then run some tests.
+Students have to measure performance within the docker and on the real nodes and then compare/discuss differences (if any) in performance.
+
+Selected scientific applications:
+ - Quantum Espresso
+ - LAMMPS
+ - RegCM 
+ - HPL 
 
 
-Note
-====
 
-To access the OpenStack dashboard and the virtual machine you need to connected either with ethernet connection or to connect to the hidden wireless network 
-::
 
-  MHPC
 
-with password
-::
 
-  2014-2015
 
