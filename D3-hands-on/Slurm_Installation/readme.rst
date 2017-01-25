@@ -9,7 +9,7 @@ Install and configure SLURM package and compare with Torque/Maui.
 Tutor 
 -----
 
-S.Cozzini/ G.Gallizia
+S.Cozzini/ A.Sartori
 
 Steps:
 ------
@@ -51,14 +51,12 @@ environment of the laboratory.
 
 #. Log into the master node then become the superuser with::
 
-        $ ssh-add your_ssh_key
-        $ ssh -A centos@$MASTER
+        $ eval `ssh-agent`
+	$ ssh-add mhpc_0X
+        $ ssh -A centos@IP_OF_YOUR_CLUSTER
         $ sudo -i
 
-   Don't forget to substitute ``your_ssh_key`` with the path to your
-   *private* SSH key. The ``-A`` switch enables SSH agent forwarding and
-   ``$MASTER`` should be changed with the effective IP address of the
-   master node when you type the ``ssh`` command.
+   The ``-A`` switch enables SSH agent forwarding.
 
 #. Generate a couple of SSH keys without a passphrase::
 
@@ -145,7 +143,7 @@ Edit and propagate the hosts file
 
 #. Try to log into the nodes using names instead of IPs::
 
-        # ssh slurm-1
+        # ssh slurm-2
         # exit
 
 #. If you can log into the nodes then you can propagate your
@@ -329,7 +327,6 @@ dependencies::
 
 Get the slurm tar-ball::
 
-    wget http://www.schedmd.com/download/archive/slurm-14.11.2.tar.bz2
     wget http://www.schedmd.com/downloads/latest/slurm-15.08.13.tar.bz2
 
 Then build the RPMs with::
